@@ -110,6 +110,9 @@
                 box-shadow: 0 0 30px #ff4500, 0 0 60px #ff69b4;
             }
         }
+        .auto-style10 {
+            width: 50%;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -131,6 +134,12 @@
             --------------------------- Don't have an account? -------------------------
         </div>
         <asp:Button ID="btnSignUp" runat="server" Text="Sign Up" CssClass="button" />
-        <div class="divider">We will place the SQL database server here</div>
+        <div class="divider">We will place the SQL database server here<br />
+            <table align="center" class="auto-style10">
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </asp:Content>
