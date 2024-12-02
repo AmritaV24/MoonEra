@@ -82,9 +82,31 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <h1>Delete Your Account</h1>
-        <p>To delete your account, enter your email address and press the delete button.</p>
+        <p>To delete your account, simply enter your email address and press the &quot;Delete My Account&quot; button.</p>
         <asp:TextBox ID="txtEmail" runat="server" Placeholder="Enter your email address"></asp:TextBox>
         <p></p>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString %>" DeleteCommand="DELETE FROM [Login] WHERE [Email] = @Email" InsertCommand="INSERT INTO [Login] ([Email], [Password], [FName], [LName], [YOB]) VALUES (@Email, @Password, @FName, @LName, @YOB)" ProviderName="<%$ ConnectionStrings:F24Team8ConnectionString.ProviderName %>" SelectCommand="SELECT * FROM [Login] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [Login] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB WHERE [Email] = @Email">
+            <DeleteParameters>
+                <asp:Parameter Name="Email" Type="String" />
+            </DeleteParameters>
+            <InsertParameters>
+                <asp:Parameter Name="Email" Type="String" />
+                <asp:Parameter Name="Password" Type="String" />
+                <asp:Parameter Name="FName" Type="String" />
+                <asp:Parameter Name="LName" Type="String" />
+                <asp:Parameter Name="YOB" Type="Int32" />
+            </InsertParameters>
+            <SelectParameters>
+                <asp:Parameter Name="Email" Type="String" />
+            </SelectParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="Password" Type="String" />
+                <asp:Parameter Name="FName" Type="String" />
+                <asp:Parameter Name="LName" Type="String" />
+                <asp:Parameter Name="YOB" Type="Int32" />
+                <asp:Parameter Name="Email" Type="String" />
+            </UpdateParameters>
+        </asp:SqlDataSource>
         <asp:Button ID="btnDelete" 
             runat="server" 
             Text="Delete My Account" 

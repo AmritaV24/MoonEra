@@ -31,7 +31,7 @@ namespace MoonEra
             }
 
             // Database connection string**WE NEEED TO CHANGE THIS!!***
-            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=Student4720;User ID=StudentUser;Password=Bc!$4720;";
+            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=F24Team8;User ID=Team8;Password=F4720T8;";
 
             // SQL delete command
             string deleteQuery = "DELETE FROM Login WHERE Email = @Email";

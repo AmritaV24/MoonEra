@@ -61,8 +61,8 @@
     <div class="container fade-effect">
         <div class="goodbye-icon">&#128075;</div>
         <h1>We are so sorry to see you go.</h1>
-        <p>We hope you enjoyed our webpage!</p>
-        <p>Goodbye</p>
+        <p>We hope you enjoyed MoonEras webpage!</p>
+        <p>Goodbye for now,</p>
         <p>...</p>
         <p>Until Next Time! &gt;:-}</p>
     </div>
