@@ -4,13 +4,117 @@
 
 <html>
 <head runat="server">
-    <title></title>
+    <title>MoonEra</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1c1c3c, #080808);
+            color: #e0e0e0;
+        }
+
+        form {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .auto-style1 {
+            width: 50%;
+            float: right;
+        }
+
+        .auto-style2 {
+            text-align: right;
+        }
+
+        .auto-style8 {
+            text-align: center;
+        }
+
+        .auto-style9 {
+            width: 563px;
+            height: 101px;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        a {
+            text-decoration: none;
+            color: #00ffff;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #ff66ff;
+        }
+
+        table {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .auto-style8 a {
+            margin: 0 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px #00ffff, 0 0 50px #00ffff;
+            }
+            50% {
+                box-shadow: 0 0 30px #ff66ff, 0 0 60px #ff66ff;
+            }
+        }
+
+        h1, h2, h3 {
+            color: #00ffff;
+            text-shadow: 0 0 10px #ff66ff;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+            <table align="right" class="auto-style1">
+                <tr>
+                    <td class="auto-style2">
+                        <asp:HyperLink ID="hpLogIn" runat="server" NavigateUrl="~/Login.aspx">Log In</asp:HyperLink>
+                    &nbsp;|
+                        <asp:HyperLink ID="hpRegister" runat="server" NavigateUrl="~/Register.aspx">Sign Up</asp:HyperLink>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="auto-style8">
+                        <asp:HyperLink ID="hpShop" runat="server" NavigateUrl="~/Shop.aspx">Shop</asp:HyperLink>
+                        &nbsp;|
+                        <asp:HyperLink ID="hpDonate" runat="server" NavigateUrl="~/Donate.aspx">Donate</asp:HyperLink>
+                        &nbsp;|
+                        <asp:HyperLink ID="hpCharities" runat="server" NavigateUrl="~/Charities.aspx">Charities</asp:HyperLink>
+                        &nbsp;|
+                        <asp:HyperLink ID="hpAboutUs" runat="server" NavigateUrl="~/AboutUs.aspx">About Us</asp:HyperLink>
+                        &nbsp;|
+                        <asp:HyperLink ID="hpContactUs" runat="server" NavigateUrl="~/ContactUs.aspx">Contact Us</asp:HyperLink>
+                    </td>
+                </tr>
+            </table>
+            <!-- Wrapped the logo with a HyperLink control -->
+            <asp:HyperLink ID="hpHome" runat="server" NavigateUrl="~/Default.aspx">
+                <img alt="Moon Era Logo" class="auto-style9" longdesc="https://localhost:44364/Images/MoonEraLogo.JPG" src="Images/MoonEraLogo.JPG" />
+            </asp:HyperLink>
+            <br />
+            <br />
+            <br />
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
