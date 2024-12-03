@@ -3,5 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p>
-        Brand New Collection Soon! Stay connected through our social media!</p>
+        Brand New Collection Coming Soon! Stay connected through our social media!</p>
 </asp:Content>
