@@ -55,16 +55,21 @@ namespace MoonEra
                             sUser = myReader.GetString(2) + " " + myReader.GetString(3); // FName + LName
                         }
 
-                        if (txtEmail.Text == sEmail && txtPassword.Text == sPass)
+                        if (!string.IsNullOrEmpty(sEmail) && txtEmail.Text == sEmail && txtPassword.Text == sPass)
                         {
-                            Session["User"] = sUser; // Save usr to session
-                            Session["Email"] = sEmail; // save email to session
+                            // Store only essential data in session variables
+                            Session["Email"] = sEmail; // Save email for subsequent database queries
+                            Session["User"] = sUser;  // Save user-friendly name for display purposes
+
+                            System.Diagnostics.Debug.WriteLine("Session[Email]: " + Session["Email"]);
                             System.Diagnostics.Debug.WriteLine("Session[User]: " + Session["User"]);
+
                             Response.Redirect("LoginSuccess.aspx");
                         }
                         else
                         {
-                            lblError.Text = "Invalid username or password";
+                            lblError.Text = "Invalid email or password. Please try again.";
+                            lblError.ForeColor = System.Drawing.Color.Red;
                         }
                     }
                     catch (Exception ex)

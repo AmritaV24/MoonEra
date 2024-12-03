@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Update.aspx.cs" Inherits="MoonEra.Update" %>
+﻿<%@ Page Title="Update Information" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Update.aspx.cs" Inherits="MoonEra.Update" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         body {
@@ -132,6 +132,7 @@
             <td>&nbsp;</td>
             <td><asp:TextBox ID="txtConfirmPassword" runat="server" CssClass="glow-input" TextMode="Password"></asp:TextBox>
                 <asp:CompareValidator ID="cvPasswords" runat="server" ErrorMessage="Passwords Must Match" ControlToValidate="txtConfirmPassword" ControlToCompare="txtPassword" Display="Dynamic" ForeColor="#ff0033"></asp:CompareValidator>
+                <asp:RequiredFieldValidator ID="rfvPasswordC" runat="server" ErrorMessage="Password is Required" ControlToValidate="txtPassword" Display="Dynamic" ForeColor="#ff0033"></asp:RequiredFieldValidator>
             </td>
         </tr>
         <tr>
@@ -151,8 +152,12 @@
         <tr>
             <td class="auto-style10"><asp:CheckBox ID="cbPhone" runat="server" OnCheckedChanged="cbPhone_CheckedChanged" AutoPostBack="true" CssClass="checkbox" /></td>
             <td class="glow-text">Phone Number: <asp:Label ID="lblPhone" runat="server"></asp:Label></td>
-            <td><asp:TextBox ID="txtPhone" runat="server" CssClass="glow-input" TextMode="Phone"></asp:TextBox>
-                </td>
+            <td><asp:TextBox ID="txtPhone" runat="server" CssClass="glow-input"></asp:TextBox>
+            <asp:RegularExpressionValidator ID="revPhone" runat="server" ControlToValidate="txtPhone"
+                ErrorMessage="Invalid phone number format. Use (XXX) XXX-XXXX"
+                ValidationExpression="^\(\d{3}\) \d{3}-\d{4}$" Display="Dynamic" ForeColor="#ff0033">
+            </asp:RegularExpressionValidator>
+            </td>
         </tr>
         <tr>
             <td class="auto-style10"><asp:CheckBox ID="cbYoB" runat="server" OnCheckedChanged="cbYoB_CheckedChanged" AutoPostBack="true" CssClass="checkbox" /></td>

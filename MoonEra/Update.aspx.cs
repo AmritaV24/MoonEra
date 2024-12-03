@@ -43,6 +43,7 @@ namespace MoonEra
                 rfvFName.Visible = false;
                 rfvLName.Visible = false;
                 rfvPassword.Visible = false;
+                rfvPasswordC.Visible = false;
                 rfvYoB.Visible = false;
 
                 lblConfirm.Visible = false;
@@ -67,12 +68,12 @@ namespace MoonEra
             using (SqlConnection myConnection = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT L.Email, L.Password, L.FName, L.LName, L.YOB,
-                           U.PhoneNumber, U.StreetAddress, U.City, U.State, U.ZipCode,
-                           U.NameOnCard, U.CardNumber, U.ExpirationDate, U.CVV
-                    FROM dbo.Login L
-                    LEFT JOIN dbo.UserInformation U ON L.Email = U.Email
-                    WHERE L.Email = @Email";
+            SELECT L.Email, L.Password, L.FName, L.LName, L.YOB,
+                   U.PhoneNumber, U.StreetAddress, U.City, U.State, U.ZipCode,
+                   U.NameOnCard, U.CardNumber, U.ExpirationDate, U.CVV
+            FROM dbo.Login L
+            LEFT JOIN dbo.UserInformation U ON L.Email = U.Email
+            WHERE L.Email = @Email";
 
                 using (SqlCommand myCommand = new SqlCommand(query, myConnection))
                 {
@@ -117,6 +118,7 @@ namespace MoonEra
                 }
             }
         }
+
         protected void cbPassword_CheckedChanged(object sender, EventArgs e)
         {
             if (cbPassword.Checked == true)
@@ -127,6 +129,7 @@ namespace MoonEra
                 lblNewValue.Visible = true;
                 cvPasswords.Visible = true;
                 rfvPassword.Enabled = true;
+                rfvPasswordC.Enabled = true;
             }
             else
             {
@@ -136,6 +139,7 @@ namespace MoonEra
                 lblNewValue.Visible = false;
                 cvPasswords.Visible = false;
                 rfvPassword.Enabled = false;
+                rfvPasswordC.Enabled= false;
             }
         }
         protected void cbFName_CheckedChanged(object sender, EventArgs e)

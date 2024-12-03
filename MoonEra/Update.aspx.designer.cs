@@ -96,6 +96,15 @@ namespace MoonEra
         protected global::System.Web.UI.WebControls.CompareValidator cvPasswords;
 
         /// <summary>
+        /// rfvPasswordC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPasswordC;
+
+        /// <summary>
         /// cbFName control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,15 @@ namespace MoonEra
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPhone;
+
+        /// <summary>
+        /// revPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPhone;
 
         /// <summary>
         /// cbYoB control.
