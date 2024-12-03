@@ -140,8 +140,7 @@
         <asp:Button ID="btnSignUp" runat="server" Text="Sign Up" CssClass="button" OnClick="btnSignUp_Click" />
         <br />
         <br />
-        <br />
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString2 %>" DeleteCommand="DELETE FROM [UserInformation] WHERE [Email] = @Email" InsertCommand="INSERT INTO [UserInformation] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" ProviderName="<%$ ConnectionStrings:F24Team8ConnectionString2.ProviderName %>" SelectCommand="SELECT * FROM [UserInformation] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [UserInformation] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString %>" DeleteCommand="DELETE FROM [User] WHERE [Email] = @Email" InsertCommand="INSERT INTO [User] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" ProviderName="<%$ ConnectionStrings:F24Team8ConnectionString.ProviderName %>" SelectCommand="SELECT * FROM [User] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [User] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
             <DeleteParameters>
                 <asp:Parameter Name="Email" Type="String" />
             </DeleteParameters>
@@ -181,6 +180,7 @@
                 <asp:Parameter Name="Email" Type="String" />
             </UpdateParameters>
         </asp:SqlDataSource>
+        <br />
     </div>
 
     <script type="text/javascript">

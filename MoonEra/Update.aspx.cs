@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -48,6 +49,7 @@ namespace MoonEra
 
                 lblConfirm.Visible = false;
                 lblNewValue.Visible = false;
+                lblError.Visible = false;
 
                 cbFName.Checked = false;
                 cbLName.Checked = false;
@@ -63,15 +65,31 @@ namespace MoonEra
 
         private void LoadUserData()
         {
+            // Validate Session["Email"]
+            if (Session["Email"] == null || string.IsNullOrEmpty(Session["Email"].ToString()))
+            {
+                System.Diagnostics.Debug.WriteLine("Session['Email'] is null or empty. Redirecting to login.");
+                lblError.Text = "Session expired. Please log in again.";
+                lblError.Visible = true;
+                Response.Redirect("~/Default.aspx");
+                return;
+            }
+
+            string email = Session["Email"].ToString();
+            System.Diagnostics.Debug.WriteLine("Email from session: " + email);
+
             string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=F24Team8;User ID=Team8;Password=F4720T8;";
 
             using (SqlConnection myConnection = new SqlConnection(connectionString))
             {
-                string query = "SELECT Email, Password, FName, LName, YOB, PhoneNumber, StreetAddress, City, State, ZipCode, NameOnCard, CardNumber, ExpirationDate, CVV FROM dbo.UserInformation WHERE Email = @Email";
+                string query = @"
+            SELECT Email, Password, FName, LName, YOB, PhoneNumber, StreetAddress, City, State, ZipCode, NameOnCard, CardNumber, ExpirationDate, CVV 
+            FROM [User] 
+            WHERE Email = @Email";
 
                 using (SqlCommand myCommand = new SqlCommand(query, myConnection))
                 {
-                    myCommand.Parameters.AddWithValue("@Email", Session["Email"]);
+                    myCommand.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar) { Value = email });
 
                     try
                     {
@@ -82,36 +100,41 @@ namespace MoonEra
                             {
                                 while (myReader.Read())
                                 {
-                                    // Populate labels with data from the database
-                                    lblEmail.Text = myReader["Email"].ToString();
-                                    lblPassword.Text = myReader["Password"].ToString();
-                                    lblFName.Text = myReader["FName"].ToString();
-                                    lblLName.Text = myReader["LName"].ToString();
-                                    lblYoB.Text = myReader["YOB"].ToString();
-                                    lblPhone.Text = myReader["PhoneNumber"].ToString();
-                                    lblStreetAddress.Text = myReader["StreetAddress"].ToString();
-                                    lblCity.Text = myReader["City"].ToString();
-                                    lblState.Text = myReader["State"].ToString();
-                                    lblZipcode.Text = myReader["ZipCode"].ToString();
-                                    lblNameOnCard.Text = myReader["NameOnCard"].ToString();
-                                    lblCardNumber.Text = myReader["CardNumber"].ToString();
-                                    lblExpirationDate.Text = myReader["ExpirationDate"].ToString();
-                                    lblCVV.Text = myReader["CVV"].ToString();
+                                    lblEmail.Text = myReader["Email"]?.ToString() ?? "Not Provided";
+                                    lblPassword.Text = myReader["Password"]?.ToString() ?? "Not Provided";
+                                    lblFName.Text = myReader["FName"]?.ToString() ?? "Not Provided";
+                                    lblLName.Text = myReader["LName"]?.ToString() ?? "Not Provided";
+                                    lblYoB.Text = myReader["YOB"]?.ToString() ?? "Not Provided";
+                                    lblPhone.Text = myReader["PhoneNumber"]?.ToString() ?? "Not Provided";
+                                    lblStreetAddress.Text = myReader["StreetAddress"]?.ToString() ?? "Not Provided";
+                                    lblCity.Text = myReader["City"]?.ToString() ?? "Not Provided";
+                                    lblState.Text = myReader["State"]?.ToString() ?? "Not Provided";
+                                    lblZipcode.Text = myReader["ZipCode"]?.ToString() ?? "Not Provided";
+                                    lblNameOnCard.Text = myReader["NameOnCard"]?.ToString() ?? "Not Provided";
+                                    lblCardNumber.Text = myReader["CardNumber"]?.ToString() ?? "Not Provided";
+                                    lblExpirationDate.Text = myReader["ExpirationDate"]?.ToString() ?? "Not Provided";
+                                    lblCVV.Text = myReader["CVV"]?.ToString() ?? "Not Provided";
                                 }
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine("No user found with provided email.");
+                                System.Diagnostics.Debug.WriteLine("No user found for email: " + email);
+                                lblError.Text = "No user information found.";
+                                lblError.Visible = true;
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("Error retrieving user data: " + ex.Message);
+                        System.Diagnostics.Debug.WriteLine($"Error retrieving user data: {ex.Message}");
+                        lblError.Text = "An error occurred while loading your information.";
+                        lblError.Visible = true;
                     }
                 }
             }
         }
+
+
 
         protected void cbPassword_CheckedChanged(object sender, EventArgs e)
         {
@@ -133,7 +156,7 @@ namespace MoonEra
                 lblNewValue.Visible = false;
                 cvPasswords.Visible = false;
                 rfvPassword.Enabled = false;
-                rfvPasswordC.Enabled= false;
+                rfvPasswordC.Enabled = false;
             }
         }
         protected void cbFName_CheckedChanged(object sender, EventArgs e)
@@ -183,7 +206,7 @@ namespace MoonEra
             {
                 txtPhone.Visible = false;
                 lblPhone.Visible = false;
-               // rfvLName.Visible = false;
+                // rfvLName.Visible = false;
                 lblNewValue.Visible = false;
             }
         }
@@ -271,72 +294,77 @@ namespace MoonEra
             {
                 using (SqlConnection UConnection = new SqlConnection(connectionString))
                 {
-                    UConnection.Open(); // Open the connection before executing commands.
+                    UConnection.Open();
 
-                    // Update UserInformation table
+                    // Update [User] table
                     using (SqlCommand userInfoCommand = new SqlCommand(@"
-            UPDATE dbo.UserInformation
-            SET Password = @Password, 
-                FName = @FName, 
-                LName = @LName, 
-                YOB = @YOB, 
-                PhoneNumber = @PhoneNumber, 
-                StreetAddress = @StreetAddress, 
-                City = @City, 
-                State = @State, 
-                ZipCode = @ZipCode, 
-                NameOnCard = @NameOnCard, 
-                CardNumber = @CardNumber, 
-                ExpirationDate = @ExpirationDate, 
-                CVV = @CVV
-            WHERE Email = @Email", UConnection))
+                UPDATE [User]
+                SET Password = @Password, 
+                    FName = @FName, 
+                    LName = @LName, 
+                    YOB = @YOB, 
+                    PhoneNumber = @PhoneNumber, 
+                    StreetAddress = @StreetAddress, 
+                    City = @City, 
+                    State = @State, 
+                    ZipCode = @ZipCode, 
+                    NameOnCard = @NameOnCard, 
+                    CardNumber = @CardNumber, 
+                    ExpirationDate = @ExpirationDate, 
+                    CVV = @CVV
+                WHERE Email = @Email", UConnection))
                     {
-                        // Add parameters to the query
-                        userInfoCommand.Parameters.AddWithValue("@Email", Session["Email"]);
-                        userInfoCommand.Parameters.AddWithValue("@Password", cbPassword.Checked ? txtPassword.Text : lblPassword.Text);
-                        userInfoCommand.Parameters.AddWithValue("@FName", cbFName.Checked ? txtFName.Text : lblFName.Text);
-                        userInfoCommand.Parameters.AddWithValue("@LName", cbLName.Checked ? txtLName.Text : lblLName.Text);
-                        userInfoCommand.Parameters.AddWithValue("@YOB", cbYoB.Checked ? txtYoB.Text : lblYoB.Text);
-                        userInfoCommand.Parameters.AddWithValue("@PhoneNumber", cbPhone.Checked ? txtPhone.Text : lblPhone.Text);
-                        userInfoCommand.Parameters.AddWithValue("@StreetAddress", cbAddress.Checked ? txtStreetAddress.Text : lblStreetAddress.Text);
-                        userInfoCommand.Parameters.AddWithValue("@City", cbAddress.Checked ? txtCity.Text : lblCity.Text);
-                        userInfoCommand.Parameters.AddWithValue("@State", cbAddress.Checked ? txtState.Text : lblState.Text);
-                        userInfoCommand.Parameters.AddWithValue("@ZipCode", cbAddress.Checked ? txtZipcode.Text : lblZipcode.Text);
-                        userInfoCommand.Parameters.AddWithValue("@NameOnCard", cbPaymentMethod.Checked ? txtNameOnCard.Text : lblNameOnCard.Text);
-                        userInfoCommand.Parameters.AddWithValue("@CardNumber", cbPaymentMethod.Checked ? txtCardNumber.Text : lblCardNumber.Text);
-                        userInfoCommand.Parameters.AddWithValue("@ExpirationDate", cbPaymentMethod.Checked ? txtExpirationDate.Text : lblExpirationDate.Text);
-                        userInfoCommand.Parameters.AddWithValue("@CVV", cbPaymentMethod.Checked ? txtCVV.Text : lblCVV.Text);
+                        // Add parameters with explicit types
+                        userInfoCommand.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar) { Value = Session["Email"]?.ToString() ?? string.Empty });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@Password", SqlDbType.VarChar) { Value = cbPassword.Checked ? txtPassword.Text : lblPassword.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@FName", SqlDbType.VarChar) { Value = cbFName.Checked ? txtFName.Text : lblFName.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@LName", SqlDbType.VarChar) { Value = cbLName.Checked ? txtLName.Text : lblLName.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@YOB", SqlDbType.Int) { Value = cbYoB.Checked ? (object)Convert.ToInt32(txtYoB.Text) : Convert.ToInt32(lblYoB.Text) });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@PhoneNumber", SqlDbType.VarChar) { Value = cbPhone.Checked ? txtPhone.Text : lblPhone.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@StreetAddress", SqlDbType.VarChar) { Value = cbAddress.Checked ? txtStreetAddress.Text : lblStreetAddress.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@City", SqlDbType.VarChar) { Value = cbAddress.Checked ? txtCity.Text : lblCity.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@State", SqlDbType.VarChar) { Value = cbAddress.Checked ? txtState.Text : lblState.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@ZipCode", SqlDbType.VarChar) { Value = cbAddress.Checked ? txtZipcode.Text : lblZipcode.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@NameOnCard", SqlDbType.VarChar) { Value = cbPaymentMethod.Checked ? txtNameOnCard.Text : lblNameOnCard.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@CardNumber", SqlDbType.VarChar) { Value = cbPaymentMethod.Checked ? txtCardNumber.Text : lblCardNumber.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@ExpirationDate", SqlDbType.VarChar) { Value = cbPaymentMethod.Checked ? txtExpirationDate.Text : lblExpirationDate.Text });
+                        userInfoCommand.Parameters.Add(new SqlParameter("@CVV", SqlDbType.VarChar) { Value = cbPaymentMethod.Checked ? txtCVV.Text : lblCVV.Text });
 
                         // Execute the query
                         int rowsAffected = userInfoCommand.ExecuteNonQuery();
-                        System.Diagnostics.Debug.WriteLine("Rows affected in UserInformation: " + rowsAffected);
+                        System.Diagnostics.Debug.WriteLine("Rows affected: " + rowsAffected);
 
-                        // Update the success flag based on the query result
+                        // Update success flag
                         isUpdateSuccessful = rowsAffected > 0;
                     }
                 }
 
-                // Redirect or display a success message based on the result
+                // Redirect or display success message
                 if (isUpdateSuccessful)
                 {
                     Response.Redirect("~/UpdateSuccess.aspx");
                 }
                 else
                 {
-                    lblUpdateStatus.Text = "I'm sorry, your update was unsuccessful. Please try again.";
+                    lblUpdateStatus.Text = "Update was unsuccessful. Please try again.";
                     lblUpdateStatus.ForeColor = System.Drawing.Color.Red;
                     lblUpdateStatus.Visible = true;
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                System.Diagnostics.Debug.WriteLine("SQL Error: " + sqlEx.Message);
+                lblUpdateStatus.Text = "Database error occurred. Please try again later.";
+                lblUpdateStatus.ForeColor = System.Drawing.Color.Red;
+                lblUpdateStatus.Visible = true;
+            }
             catch (Exception ex)
             {
-                // Log the error and display a message
-                System.Diagnostics.Debug.WriteLine("Error during update: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
                 lblUpdateStatus.Text = "An error occurred while updating your information. Please try again later.";
                 lblUpdateStatus.ForeColor = System.Drawing.Color.Red;
                 lblUpdateStatus.Visible = true;
             }
         }
-
     }
 }
