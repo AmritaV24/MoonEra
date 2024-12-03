@@ -67,13 +67,7 @@ namespace MoonEra
 
             using (SqlConnection myConnection = new SqlConnection(connectionString))
             {
-                string query = @"
-            SELECT L.Email, L.Password, L.FName, L.LName, L.YOB,
-                   U.PhoneNumber, U.StreetAddress, U.City, U.State, U.ZipCode,
-                   U.NameOnCard, U.CardNumber, U.ExpirationDate, U.CVV
-            FROM dbo.Login L
-            LEFT JOIN dbo.UserInformation U ON L.Email = U.Email
-            WHERE L.Email = @Email";
+                string query = "SELECT Email, Password, FName, LName, YOB, PhoneNumber, StreetAddress, City, State, ZipCode, NameOnCard, CardNumber, ExpirationDate, CVV FROM dbo.UserInformation WHERE Email = @Email";
 
                 using (SqlCommand myCommand = new SqlCommand(query, myConnection))
                 {
@@ -277,33 +271,32 @@ namespace MoonEra
             {
                 using (SqlConnection UConnection = new SqlConnection(connectionString))
                 {
-                    UConnection.Open();
-
-                    // Update Login table
-                    using (SqlCommand loginCommand = new SqlCommand(@"
-                UPDATE dbo.Login
-                SET Password = @Password, FName = @FName, LName = @LName, YOB = @YOB
-                WHERE Email = @Email", UConnection))
-                    {
-                        loginCommand.Parameters.AddWithValue("@Email", Session["Email"]);
-                        loginCommand.Parameters.AddWithValue("@Password", cbPassword.Checked ? txtPassword.Text : lblPassword.Text);
-                        loginCommand.Parameters.AddWithValue("@FName", cbFName.Checked ? txtFName.Text : lblFName.Text);
-                        loginCommand.Parameters.AddWithValue("@LName", cbLName.Checked ? txtLName.Text : lblLName.Text);
-                        loginCommand.Parameters.AddWithValue("@YOB", cbYoB.Checked ? txtYoB.Text : lblYoB.Text);
-
-                        int rowsAffected = loginCommand.ExecuteNonQuery();
-                        System.Diagnostics.Debug.WriteLine("Rows affected in Login: " + rowsAffected);
-                        isUpdateSuccessful = rowsAffected > 0;
-                    }
+                    UConnection.Open(); // Open the connection before executing commands.
 
                     // Update UserInformation table
                     using (SqlCommand userInfoCommand = new SqlCommand(@"
-                UPDATE dbo.UserInformation
-                SET PhoneNumber = @PhoneNumber, StreetAddress = @StreetAddress, City = @City, State = @State, ZipCode = @ZipCode,
-                    NameOnCard = @NameOnCard, CardNumber = @CardNumber, ExpirationDate = @ExpirationDate, CVV = @CVV
-                WHERE Email = @Email", UConnection))
+            UPDATE dbo.UserInformation
+            SET Password = @Password, 
+                FName = @FName, 
+                LName = @LName, 
+                YOB = @YOB, 
+                PhoneNumber = @PhoneNumber, 
+                StreetAddress = @StreetAddress, 
+                City = @City, 
+                State = @State, 
+                ZipCode = @ZipCode, 
+                NameOnCard = @NameOnCard, 
+                CardNumber = @CardNumber, 
+                ExpirationDate = @ExpirationDate, 
+                CVV = @CVV
+            WHERE Email = @Email", UConnection))
                     {
+                        // Add parameters to the query
                         userInfoCommand.Parameters.AddWithValue("@Email", Session["Email"]);
+                        userInfoCommand.Parameters.AddWithValue("@Password", cbPassword.Checked ? txtPassword.Text : lblPassword.Text);
+                        userInfoCommand.Parameters.AddWithValue("@FName", cbFName.Checked ? txtFName.Text : lblFName.Text);
+                        userInfoCommand.Parameters.AddWithValue("@LName", cbLName.Checked ? txtLName.Text : lblLName.Text);
+                        userInfoCommand.Parameters.AddWithValue("@YOB", cbYoB.Checked ? txtYoB.Text : lblYoB.Text);
                         userInfoCommand.Parameters.AddWithValue("@PhoneNumber", cbPhone.Checked ? txtPhone.Text : lblPhone.Text);
                         userInfoCommand.Parameters.AddWithValue("@StreetAddress", cbAddress.Checked ? txtStreetAddress.Text : lblStreetAddress.Text);
                         userInfoCommand.Parameters.AddWithValue("@City", cbAddress.Checked ? txtCity.Text : lblCity.Text);
@@ -314,12 +307,16 @@ namespace MoonEra
                         userInfoCommand.Parameters.AddWithValue("@ExpirationDate", cbPaymentMethod.Checked ? txtExpirationDate.Text : lblExpirationDate.Text);
                         userInfoCommand.Parameters.AddWithValue("@CVV", cbPaymentMethod.Checked ? txtCVV.Text : lblCVV.Text);
 
+                        // Execute the query
                         int rowsAffected = userInfoCommand.ExecuteNonQuery();
                         System.Diagnostics.Debug.WriteLine("Rows affected in UserInformation: " + rowsAffected);
-                        isUpdateSuccessful = isUpdateSuccessful && rowsAffected > 0;
+
+                        // Update the success flag based on the query result
+                        isUpdateSuccessful = rowsAffected > 0;
                     }
                 }
 
+                // Redirect or display a success message based on the result
                 if (isUpdateSuccessful)
                 {
                     Response.Redirect("~/UpdateSuccess.aspx");
@@ -333,11 +330,13 @@ namespace MoonEra
             }
             catch (Exception ex)
             {
+                // Log the error and display a message
                 System.Diagnostics.Debug.WriteLine("Error during update: " + ex.Message);
                 lblUpdateStatus.Text = "An error occurred while updating your information. Please try again later.";
                 lblUpdateStatus.ForeColor = System.Drawing.Color.Red;
                 lblUpdateStatus.Visible = true;
             }
         }
+
     }
 }

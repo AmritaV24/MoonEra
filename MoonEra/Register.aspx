@@ -186,7 +186,7 @@
                 </tr>
             </table>
 
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString3 %>" DeleteCommand="DELETE FROM [Login] WHERE [Email] = @Email" InsertCommand="INSERT INTO [Login] ([Email], [Password], [FName], [LName], [YOB]) VALUES (@Email, @Password, @FName, @LName, @YOB)" SelectCommand="SELECT * FROM [Login] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [Login] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB WHERE [Email] = @Email">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString2 %>" DeleteCommand="DELETE FROM [UserInformation] WHERE [Email] = @Email" InsertCommand="INSERT INTO [UserInformation] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" SelectCommand="SELECT * FROM [UserInformation] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [UserInformation] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
                 <DeleteParameters>
                     <asp:Parameter Name="Email" Type="String" />
                 </DeleteParameters>
@@ -196,6 +196,15 @@
                     <asp:Parameter Name="FName" Type="String" />
                     <asp:Parameter Name="LName" Type="String" />
                     <asp:Parameter Name="YOB" Type="Int32" />
+                    <asp:Parameter Name="PhoneNumber" Type="String" />
+                    <asp:Parameter Name="StreetAddress" Type="String" />
+                    <asp:Parameter Name="City" Type="String" />
+                    <asp:Parameter Name="State" Type="String" />
+                    <asp:Parameter Name="ZipCode" Type="String" />
+                    <asp:Parameter Name="NameOnCard" Type="String" />
+                    <asp:Parameter Name="CardNumber" Type="String" />
+                    <asp:Parameter Name="ExpirationDate" Type="String" />
+                    <asp:Parameter Name="CVV" Type="String" />
                 </InsertParameters>
                 <SelectParameters>
                     <asp:Parameter Name="Email" Type="String" />
@@ -205,6 +214,15 @@
                     <asp:Parameter Name="FName" Type="String" />
                     <asp:Parameter Name="LName" Type="String" />
                     <asp:Parameter Name="YOB" Type="Int32" />
+                    <asp:Parameter Name="PhoneNumber" Type="String" />
+                    <asp:Parameter Name="StreetAddress" Type="String" />
+                    <asp:Parameter Name="City" Type="String" />
+                    <asp:Parameter Name="State" Type="String" />
+                    <asp:Parameter Name="ZipCode" Type="String" />
+                    <asp:Parameter Name="NameOnCard" Type="String" />
+                    <asp:Parameter Name="CardNumber" Type="String" />
+                    <asp:Parameter Name="ExpirationDate" Type="String" />
+                    <asp:Parameter Name="CVV" Type="String" />
                     <asp:Parameter Name="Email" Type="String" />
                 </UpdateParameters>
             </asp:SqlDataSource>
