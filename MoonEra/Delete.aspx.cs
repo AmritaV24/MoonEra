@@ -23,63 +23,55 @@ namespace MoonEra
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            // Ensure the email matches the logged-in user's session email
-            if (!string.Equals(Session["Email"]?.ToString(), txtEmail.Text, StringComparison.OrdinalIgnoreCase))
+            // Validate email matches the logged-in user's session email
+            if (Session["Email"] == null || !string.Equals(Session["Email"].ToString(), txtEmail.Text, StringComparison.OrdinalIgnoreCase))
             {
-                Response.Write("<script>alert('Email does not match the logged-in user.');</script>");
+                Response.Write("<script>alert('The entered email does not match the logged-in user.');</script>");
                 return;
             }
 
-            // Database connection string**WE NEEED TO CHANGE THIS!!***
-            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=F24Team8;User ID=Team8;Password=F4720T8;";
-
-            // SQL delete command
-            string deleteQuery = "DELETE FROM Login WHERE Email = @Email";
+            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=F24Team8;User ID=Team8;Password=F4720T8;Encrypt=True;TrustServerCertificate=True;";
+            string deleteQuery = "DELETE FROM [User] WHERE Email = @Email";
 
             using (SqlConnection dcon = new SqlConnection(connectionString))
             {
-                SqlCommand dcommand = new SqlCommand(deleteQuery, dcon);
-                dcommand.Parameters.AddWithValue("@Email", Session["Email"].ToString());
-
-                try
+                using (SqlCommand dcommand = new SqlCommand(deleteQuery, dcon))
                 {
-                    dcon.Open();
-                    int rowsAffected = dcommand.ExecuteNonQuery();
+                    // Use SqlParameter for security and type handling
+                    dcommand.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar) { Value = Session["Email"].ToString() });
 
-                    if (rowsAffected > 0)
+                    try
                     {
-                        // Clear session after deletion
-                        Session.Clear();
-                        Session.Abandon();
+                        dcon.Open();
+                        int rowsAffected = dcommand.ExecuteNonQuery();
 
-                        // Redirect to the success page
-                        Response.Redirect("DeleteSuccess.aspx");
+                        if (rowsAffected > 0)
+                        {
+                            // Clear session after deletion
+                            Session.Clear();
+                            Session.Abandon();
+
+                            // Redirect to the success page
+                            Response.Redirect("DeleteSuccess.aspx");
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('No matching account found to delete.');</script>");
+                        }
                     }
-                    else
+                    catch (SqlException ex)
                     {
-                        Response.Write("<script>alert('No matching account found to delete.');</script>");
+                        // Log the error for debugging
+                        System.Diagnostics.Debug.WriteLine("SQL Error: " + ex.Message);
+                        Response.Write("<script>alert('An error occurred while deleting your account. Please try again later.');</script>");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log general exceptions
+                        System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                        Response.Write($"<script>alert('An unexpected error occurred: {ex.Message}');</script>");
                     }
                 }
-                catch (Exception ex)
-                {
-                    Response.Write($"<script>alert('An error occurred: {ex.Message}');</script>");
-                }
-            }
-        }
-        protected void DeleteFromSqlDataSource(object sender, EventArgs e)
-        {
-            try
-            {
-                 //This code should work after we establish a connection
-                //SqlDataSource1.DeleteParameters["Email"].DefaultValue = Session["Email"].ToString();
-                //SqlDataSource1.Delete();
-                Session.Clear();
-                Session.Abandon();
-                Response.Redirect("DeleteSuccess.aspx");
-            }
-            catch (Exception ex)
-            {
-                Response.Write($"<script>alert('An error occurred: {ex.Message}');</script>");
             }
         }
     }
