@@ -54,6 +54,11 @@
             margin-bottom: 15px;
         }
 
+        input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover {
+            border-color: #ff4500;
+            box-shadow: 0 0 15px #ff4500;
+        }
+
         input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
             outline: none;
             border-color: #1e90ff;
@@ -68,7 +73,7 @@
         }
 
         .checkbox input[type="checkbox"] {
-            transform: scale(2); /* Double the size */
+            transform: scale(2);
             margin-right: 10px;
             accent-color: #ff69b4;
         }
@@ -112,6 +117,7 @@
         }
     </style>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <img alt="MoonEra Logo" src="Images/MEraLogo.JPG" />
@@ -126,11 +132,43 @@
         <div class="checkbox">
             <asp:CheckBox ID="cbKeepMeSignedIn" runat="server" Text="Keep Me Signed In" />
         </div>
-        <asp:Button ID="btnLogIn" runat="server" Text="Log In" CssClass="button" OnClick="btnLogIn_Click" />
+        <td><asp:Button ID="btnLogIn" runat="server" Text="Log In" CssClass="button" OnClick="btnLogIn_Click" /><td>
+        <td><asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="button" OnClick="btnClear_Click" /></td>
         <div class="divider">
             --------------------------- Don't have an account? -------------------------
         </div>
-        <asp:Button ID="btnSignUp" runat="server" Text="Sign Up" CssClass="button" />
-        <div class="divider">We will place the SQL database server here</div>
+        <asp:Button ID="btnSignUp" runat="server" Text="Sign Up" CssClass="button" OnClick="btnSignUp_Click" />
+        <br />
+        <br />
+        <br />
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString3 %>" DeleteCommand="DELETE FROM [Login] WHERE [Email] = @Email" InsertCommand="INSERT INTO [Login] ([Email], [Password], [FName], [LName], [YOB]) VALUES (@Email, @Password, @FName, @LName, @YOB)" ProviderName="<%$ ConnectionStrings:F24Team8ConnectionString3.ProviderName %>" SelectCommand="SELECT * FROM [Login] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [Login] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB WHERE [Email] = @Email">
+            <DeleteParameters>
+                <asp:Parameter Name="Email" Type="String" />
+            </DeleteParameters>
+            <InsertParameters>
+                <asp:Parameter Name="Email" Type="String" />
+                <asp:Parameter Name="Password" Type="String" />
+                <asp:Parameter Name="FName" Type="String" />
+                <asp:Parameter Name="LName" Type="String" />
+                <asp:Parameter Name="YOB" Type="Int32" />
+            </InsertParameters>
+            <SelectParameters>
+                <asp:Parameter Name="Email" Type="String" />
+            </SelectParameters>
+            <UpdateParameters>
+                <asp:Parameter Name="Password" Type="String" />
+                <asp:Parameter Name="FName" Type="String" />
+                <asp:Parameter Name="LName" Type="String" />
+                <asp:Parameter Name="YOB" Type="Int32" />
+                <asp:Parameter Name="Email" Type="String" />
+            </UpdateParameters>
+        </asp:SqlDataSource>
     </div>
+
+    <script type="text/javascript">
+        document.getElementById('<%= cbShowPassword.ClientID %>').addEventListener('change', function () {
+            var passwordField = document.getElementById('<%= txtPassword.ClientID %>');
+            passwordField.type = this.checked ? 'text' : 'password';
+        });
+    </script>
 </asp:Content>

@@ -80,8 +80,11 @@
     <Content Include="Login.aspx" />
     <Content Include="LoginSuccess.aspx" />
     <Content Include="Register.aspx" />
+    <Content Include="RegisterSuccess.aspx" />
     <Content Include="Shop.aspx" />
     <Content Include="StyleSheet1.css" />
+    <Content Include="Update.aspx" />
+    <Content Include="UpdateSuccess.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -166,12 +169,33 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RegisterSuccess.aspx.cs">
+      <DependentUpon>RegisterSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterSuccess.aspx.designer.cs">
+      <DependentUpon>RegisterSuccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Shop.aspx.cs">
       <DependentUpon>Shop.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Shop.aspx.designer.cs">
       <DependentUpon>Shop.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Update.aspx.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Update.aspx.designer.cs">
+      <DependentUpon>Update.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateSuccess.aspx.cs">
+      <DependentUpon>UpdateSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateSuccess.aspx.designer.cs">
+      <DependentUpon>UpdateSuccess.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

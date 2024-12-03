@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace MoonEra
 {
@@ -15,8 +16,8 @@ namespace MoonEra
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
+
         protected void btnLogIn_Click(object sender, EventArgs e)
         {
             // Validate input
@@ -31,7 +32,7 @@ namespace MoonEra
             string sUser = "";
 
             SqlDataReader myReader;
-            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=Student4720;User ID=StudentUser;Password=Bc!$4720;";
+            string connectionString = "Data Source=mimas.itds.unt.edu;Initial Catalog=F24Team8;User ID=Team8;Password=F4720T8;";
 
             using (SqlConnection myConnection = new SqlConnection(connectionString))
             {
@@ -54,16 +55,21 @@ namespace MoonEra
                             sUser = myReader.GetString(2) + " " + myReader.GetString(3); // FName + LName
                         }
 
-                        if (txtEmail.Text == sEmail && txtPassword.Text == sPass)
+                        if (!string.IsNullOrEmpty(sEmail) && txtEmail.Text == sEmail && txtPassword.Text == sPass)
                         {
-                            Session["User"] = sUser; // Save usr to session
-                            Session["Email"] = sEmail; // save email to session
+                            // Store only essential data in session variables
+                            Session["Email"] = sEmail; // Save email for subsequent database queries
+                            Session["User"] = sUser;  // Save user-friendly name for display purposes
+
+                            System.Diagnostics.Debug.WriteLine("Session[Email]: " + Session["Email"]);
                             System.Diagnostics.Debug.WriteLine("Session[User]: " + Session["User"]);
-                            Response.Redirect("Success.aspx");
+
+                            Response.Redirect("LoginSuccess.aspx");
                         }
                         else
                         {
-                            lblError.Text = "Invalid username or password";
+                            lblError.Text = "Invalid email or password. Please try again.";
+                            lblError.ForeColor = System.Drawing.Color.Red;
                         }
                     }
                     catch (Exception ex)
@@ -74,10 +80,22 @@ namespace MoonEra
                 }
             }
         }
+        private string HashPassword(string password)
+        {
+            // Example: Implement hashing logic using a secure library
+            // Placeholder:
+            return password; // Replace with actual hash logic
+        }
+
         protected void btnSignUp_Click(object sender, EventArgs e)
         {
-            // Redirect to the Register page
             Response.Redirect("Register.aspx");
+        }
+        protected void btnClear_Click(object sender, EventArgs e)
+        {
+            txtEmail.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            lblError.Text = string.Empty;
         }
     }
 }
