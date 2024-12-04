@@ -86,6 +86,7 @@
         <div class="text">
             <br /><br /><br />
             Brand New Collection Coming Soon!<br />
+            <br />
         </div>
     </div>
     
@@ -101,4 +102,6 @@
             <td>@MoonEra</td>
         </tr>
     </table>
+    <br />
+    <br />
 </asp:Content>

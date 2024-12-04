@@ -78,6 +78,8 @@
     <Content Include="Images\Background.JPG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Contact.JPG" />
+    <Content Include="Images\ContactIcon.png" />
     <Content Include="Images\InstagramLogo.JPG" />
     <Content Include="Images\MEraLogo.JPG" />
     <Content Include="Images\MoonEraLogo.JPG" />
