@@ -75,7 +75,9 @@
     <Content Include="DeleteSuccess.aspx" />
     <Content Include="Donate.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Images\Capture.JPG" />
+    <Content Include="Images\Background.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\InstagramLogo.JPG" />
     <Content Include="Images\MEraLogo.JPG" />
     <Content Include="Images\MoonEraLogo.JPG" />

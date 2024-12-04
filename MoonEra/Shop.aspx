@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Shop.aspx.cs" Inherits="MoonEra.Shop" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" type="text/css" href="Content/Styles.css" />
     <style>
         body {
-            background: url('Images/Capture.JPG') no-repeat center center fixed;
+            background: url('http://localhost:44364/Images/Capture.JPG') no-repeat center center fixed;
             background-size: cover;
             color: white;
             font-family: 'Arial', sans-serif;
