@@ -13,5 +13,10 @@ namespace MoonEra
         {
 
         }
+
+        protected void btnSubPay_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PaymentSuccess.aspx");
+        }
     }
 }
