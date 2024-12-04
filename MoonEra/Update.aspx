@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Update Information" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Update.aspx.cs" Inherits="MoonEra.Update" %>
+﻿<%@ Page Title="Update" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Update.aspx.cs" Inherits="MoonEra.Update" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style type="text/css">
         body {
@@ -62,8 +62,6 @@
 
          .checkbox {
             display: flex;
-            //align-items: left;
-            //justify-content: center;
             margin: 15px 0;
          }
 
@@ -103,7 +101,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p class="auto-style13"><strong>Edit Account:</strong></p>
     <p class="auto-style13">Select the box for the information you wish to update.</p>
-    <p class="glow-text">&nbsp;</p>
+    <p class="auto-style15">
+                <asp:Label ID="lblError" runat="server" CssClass="glow-text" ForeColor="Red" Visible="False"></asp:Label>
+            </p>
     <table class="sci-fi-table">
         <tr>
             <td class="glow-text">Update?</td>
@@ -132,6 +132,12 @@
             <td>&nbsp;</td>
             <td><asp:TextBox ID="txtConfirmPassword" runat="server" CssClass="glow-input" TextMode="Password"></asp:TextBox>
                 <asp:CompareValidator ID="cvPasswords" runat="server" ErrorMessage="Passwords Must Match" ControlToValidate="txtConfirmPassword" ControlToCompare="txtPassword" Display="Dynamic" ForeColor="#ff0033"></asp:CompareValidator>
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style10">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>
                 <asp:RequiredFieldValidator ID="rfvPasswordC" runat="server" ErrorMessage="Password is Required" ControlToValidate="txtPassword" Display="Dynamic" ForeColor="#ff0033"></asp:RequiredFieldValidator>
             </td>
         </tr>
@@ -243,7 +249,7 @@
         </tr>
         <tr>
             <td class="auto-style10">
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString %>" DeleteCommand="DELETE FROM [UserInformation] WHERE [Email] = @Email" InsertCommand="INSERT INTO [UserInformation] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" SelectCommand="SELECT * FROM [UserInformation] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [UserInformation] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString %>" DeleteCommand="DELETE FROM [User] WHERE [Email] = @Email" InsertCommand="INSERT INTO [User] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" SelectCommand="SELECT * FROM [User] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [User] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
                     <DeleteParameters>
                         <asp:Parameter Name="Email" Type="String" />
                     </DeleteParameters>
@@ -288,6 +294,13 @@
             <td>
                 <asp:Label ID="lblUpdateStatus" runat="server" CssClass="glow-text" ForeColor="Red" Visible="false"></asp:Label>
             </td>
+        </tr>
+        <tr>
+            <td class="auto-style10">
+                &nbsp;</td>
+            <td>&nbsp;</td>
+            <td>
+                &nbsp;</td>
         </tr>
     </table>
 </asp:Content>

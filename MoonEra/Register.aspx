@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="MoonEra.Register" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="MoonEra.Register" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- jQuery Script Reference -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -186,7 +186,7 @@
                 </tr>
             </table>
 
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString3 %>" DeleteCommand="DELETE FROM [Login] WHERE [Email] = @Email" InsertCommand="INSERT INTO [Login] ([Email], [Password], [FName], [LName], [YOB]) VALUES (@Email, @Password, @FName, @LName, @YOB)" SelectCommand="SELECT * FROM [Login] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [Login] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB WHERE [Email] = @Email">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:F24Team8ConnectionString %>" DeleteCommand="DELETE FROM [User] WHERE [Email] = @Email" InsertCommand="INSERT INTO [User] ([Email], [Password], [FName], [LName], [YOB], [PhoneNumber], [StreetAddress], [City], [State], [ZipCode], [NameOnCard], [CardNumber], [ExpirationDate], [CVV]) VALUES (@Email, @Password, @FName, @LName, @YOB, @PhoneNumber, @StreetAddress, @City, @State, @ZipCode, @NameOnCard, @CardNumber, @ExpirationDate, @CVV)" SelectCommand="SELECT * FROM [User] WHERE ([Email] = @Email)" UpdateCommand="UPDATE [User] SET [Password] = @Password, [FName] = @FName, [LName] = @LName, [YOB] = @YOB, [PhoneNumber] = @PhoneNumber, [StreetAddress] = @StreetAddress, [City] = @City, [State] = @State, [ZipCode] = @ZipCode, [NameOnCard] = @NameOnCard, [CardNumber] = @CardNumber, [ExpirationDate] = @ExpirationDate, [CVV] = @CVV WHERE [Email] = @Email">
                 <DeleteParameters>
                     <asp:Parameter Name="Email" Type="String" />
                 </DeleteParameters>
@@ -196,6 +196,15 @@
                     <asp:Parameter Name="FName" Type="String" />
                     <asp:Parameter Name="LName" Type="String" />
                     <asp:Parameter Name="YOB" Type="Int32" />
+                    <asp:Parameter Name="PhoneNumber" Type="String" />
+                    <asp:Parameter Name="StreetAddress" Type="String" />
+                    <asp:Parameter Name="City" Type="String" />
+                    <asp:Parameter Name="State" Type="String" />
+                    <asp:Parameter Name="ZipCode" Type="String" />
+                    <asp:Parameter Name="NameOnCard" Type="String" />
+                    <asp:Parameter Name="CardNumber" Type="String" />
+                    <asp:Parameter Name="ExpirationDate" Type="String" />
+                    <asp:Parameter Name="CVV" Type="String" />
                 </InsertParameters>
                 <SelectParameters>
                     <asp:Parameter Name="Email" Type="String" />
@@ -205,6 +214,15 @@
                     <asp:Parameter Name="FName" Type="String" />
                     <asp:Parameter Name="LName" Type="String" />
                     <asp:Parameter Name="YOB" Type="Int32" />
+                    <asp:Parameter Name="PhoneNumber" Type="String" />
+                    <asp:Parameter Name="StreetAddress" Type="String" />
+                    <asp:Parameter Name="City" Type="String" />
+                    <asp:Parameter Name="State" Type="String" />
+                    <asp:Parameter Name="ZipCode" Type="String" />
+                    <asp:Parameter Name="NameOnCard" Type="String" />
+                    <asp:Parameter Name="CardNumber" Type="String" />
+                    <asp:Parameter Name="ExpirationDate" Type="String" />
+                    <asp:Parameter Name="CVV" Type="String" />
                     <asp:Parameter Name="Email" Type="String" />
                 </UpdateParameters>
             </asp:SqlDataSource>
