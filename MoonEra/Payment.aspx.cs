@@ -16,7 +16,12 @@ namespace MoonEra
 
         protected void btnSubPay_Click(object sender, EventArgs e)
         {
-            Response.Redirect("PaymentSuccess.aspx");
+            // Extract the first name from the Name on Card field
+            string fullName = txtNameC.Text;
+            string firstName = string.IsNullOrWhiteSpace(fullName) ? "Donor" : fullName.Split(' ')[0];
+
+            // Redirect to the PaymentSuccess page with the first name as a query parameter
+            Response.Redirect($"PaymentSuccess.aspx?name={HttpUtility.UrlEncode(firstName)}");
         }
     }
 }

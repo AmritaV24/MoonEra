@@ -59,8 +59,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="success-container">
         <div class="congratulations-text">
-            Thank You for you Contribution, 
+            Thank You for your Contribution, 
             <asp:Label ID="lblUsername" runat="server" CssClass="success-message"></asp:Label>!<br />
             Your payment has been successful.<br />
+        </div>
     </div>
 </asp:Content>
