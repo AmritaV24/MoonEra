@@ -88,6 +88,9 @@
             Learn more about our initiatives at 
             <asp:HyperLink ID="MEHP" runat="server" NavigateUrl="~/Default.aspx">moonera.org</asp:HyperLink>
             <br />
+            If you wish to learn more about our chosen charity please click
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Donate.aspx">here!</asp:HyperLink>
+            <br />
 &nbsp;</div>
     </div>
 </asp:Content>
